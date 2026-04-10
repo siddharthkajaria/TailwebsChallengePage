@@ -1,5 +1,6 @@
 import FadeUp from "./FadeUp";
 import { testimonials } from "../data/content";
+import clientImg from "../assets/images/image-3.jpg";
 
 export default function Testimonials() {
   return (
@@ -19,8 +20,8 @@ export default function Testimonials() {
         <FadeUp>
           <div className="mb-10 rounded-xl overflow-hidden shadow-tw-md border border-tw-border">
             <img
-              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=350&fit=crop"
-              alt="Dashboard analytics showing project success metrics"
+              src={clientImg}
+              alt="Indian startup team celebrating project success"
               className="w-full h-auto object-cover"
               loading="lazy"
             />

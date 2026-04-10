@@ -62,16 +62,25 @@ export default function ChallengeForm() {
       const scriptUrl = import.meta.env.VITE_APPS_SCRIPT_URL;
       const payload = new URLSearchParams({ ...formData, recaptchaToken });
 
-      await fetch(scriptUrl, {
+      const res = await fetch(scriptUrl, {
         method: "POST",
-        mode: "no-cors",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: payload.toString(),
       });
 
-      setSubmitted(true);
+      const result = await res.json();
+
+      if (result.status === "success") {
+        setSubmitted(true);
+      } else {
+        setSubmitError(
+          result.message || "Submission failed. Please try again.",
+        );
+      }
     } catch (err) {
-      setSubmitError(err.message || "Something went wrong. Please try again.");
+      setSubmitError(
+        "Network error. Please check your connection and try again.",
+      );
     } finally {
       setSubmitting(false);
     }
@@ -348,6 +357,11 @@ export default function ChallengeForm() {
                 <p className="text-[0.78rem] text-tw-muted-light text-center mt-4 opacity-70">
                   No payment required. No long contracts. Just your idea — we'll
                   handle the rest.
+                </p>
+                <p className="text-[0.65rem] text-tw-muted-light/40 text-center mt-3">
+                  This site is protected by reCAPTCHA and the Google{" "}
+                  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="underline hover:text-tw-muted-light/60">Privacy Policy</a> and{" "}
+                  <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="underline hover:text-tw-muted-light/60">Terms of Service</a> apply.
                 </p>
               </form>
             </>

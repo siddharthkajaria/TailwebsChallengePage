@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&family=Instrument+Serif:ital@0;1&display=swap');
 @import "tailwindcss";
 
+/* Hide reCAPTCHA v3 floating badge — attribution is shown near the form instead */
+.grecaptcha-badge { visibility: hidden !important; }
+
 @theme {
   /* Tailwebs brand palette */
   --color-tw-primary: #E63946;

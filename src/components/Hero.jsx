@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { scrollTo } from "../utils/scroll";
 import { SLOTS_LEFT } from "../data/content";
+import heroImg from "../assets/images/image-1.jpg";
 
 export default function Hero() {
   const heroRef = useRef(null);
@@ -59,8 +60,8 @@ export default function Hero() {
         {/* Hero image */}
         <div className="fade-up delay-3 mb-14 rounded-xl overflow-hidden border border-white/10 shadow-tw-lg mx-auto max-w-[700px]">
           <img
-            src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=450&fit=crop"
-            alt="Team collaborating on software development"
+            src={heroImg}
+            alt="Indian tech team collaborating on software development"
             className="w-full h-auto object-cover"
             loading="lazy"
           />

@@ -1,5 +1,6 @@
 import FadeUp from "./FadeUp";
 import { steps } from "../data/content";
+import processImg from "../assets/images/image-2.jpg";
 
 export default function HowItWorks() {
   return (
@@ -19,8 +20,8 @@ export default function HowItWorks() {
         <FadeUp>
           <div className="mb-10 rounded-xl overflow-hidden max-w-[800px] mx-auto">
             <img
-              src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800&h=400&fit=crop"
-              alt="Planning and design process workflow"
+              src={processImg}
+              alt="Indian professionals collaborating on design and planning"
               className="w-full h-auto object-cover"
               loading="lazy"
             />

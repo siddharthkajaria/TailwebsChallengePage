@@ -1,4 +1,8 @@
+import { Link } from "react-router-dom";
+
 export default function Footer() {
+  const linkClass = "text-[0.82rem] text-tw-muted no-underline transition-colors hover:text-tw-primary focus-visible:text-tw-primary focus-visible:outline-none";
+
   return (
     <footer className="border-t border-tw-border py-10 px-[5%]" role="contentinfo">
       <div className="max-w-[1280px] mx-auto flex items-center justify-between flex-wrap gap-4 max-md:justify-center max-md:text-center">
@@ -6,13 +10,14 @@ export default function Footer() {
           tail<span className="text-tw-primary">webs</span>
         </div>
         <div className="flex gap-6 flex-wrap max-md:justify-center" role="navigation" aria-label="Footer links">
-          <a className="text-[0.82rem] text-tw-muted no-underline transition-colors hover:text-tw-primary focus-visible:text-tw-primary focus-visible:outline-none" href="https://tailwebs.com" target="_blank" rel="noopener noreferrer">tailwebs.com</a>
-          <a className="text-[0.82rem] text-tw-muted no-underline transition-colors hover:text-tw-primary focus-visible:text-tw-primary focus-visible:outline-none" href="tel:+919590708339">+91 9590708339</a>
-          <a className="text-[0.82rem] text-tw-muted no-underline transition-colors hover:text-tw-primary focus-visible:text-tw-primary focus-visible:outline-none" href="mailto:hello@tailwebs.com">hello@tailwebs.com</a>
-          <span className="text-[0.82rem] text-tw-muted cursor-pointer">Bengaluru, Karnataka</span>
+          <a className={linkClass} href="https://tailwebs.com" target="_blank" rel="noopener noreferrer">tailwebs.com</a>
+          <a className={linkClass} href="tel:+919590708339">+91 9590708339</a>
+          <a className={linkClass} href="mailto:hello@tailwebs.com">hello@tailwebs.com</a>
+          <span className="text-[0.82rem] text-tw-muted">Bengaluru, Karnataka</span>
+          <Link className={linkClass} to="/privacy-policy">Privacy Policy</Link>
         </div>
         <div className="text-[0.78rem] text-tw-muted w-full text-center mt-5 pt-5 border-t border-tw-border">
-          © {new Date().getFullYear()} Tailwebs Technology Pvt. Ltd. All rights reserved.
+          &copy; {new Date().getFullYear()} Tailwebs Technology Pvt. Ltd. All rights reserved.
         </div>
       </div>
     </footer>
