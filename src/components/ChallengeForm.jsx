@@ -30,7 +30,8 @@ export default function ChallengeForm() {
     if (!formData.firstName.trim()) errs.firstName = "First name is required";
     if (!formData.email.trim()) errs.email = "Email is required";
     else if (!validateEmail(formData.email)) errs.email = "Enter a valid email";
-    if (!formData.company.trim()) errs.company = "Company / Project name is required";
+    if (!formData.company.trim())
+      errs.company = "Company / Project name is required";
     if (!validatePhone(formData.phone))
       errs.phone = "Enter a valid phone number";
     if (!formData.idea.trim()) errs.idea = "Tell us about your idea";
@@ -373,8 +374,24 @@ export default function ChallengeForm() {
                 </p>
                 <p className="text-[0.65rem] text-tw-muted-light/40 text-center mt-3">
                   This site is protected by reCAPTCHA and the Google{" "}
-                  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="underline hover:text-tw-muted-light/60">Privacy Policy</a> and{" "}
-                  <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="underline hover:text-tw-muted-light/60">Terms of Service</a> apply.
+                  <a
+                    href="https://policies.google.com/privacy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-tw-muted-light/60"
+                  >
+                    Privacy Policy
+                  </a>{" "}
+                  and{" "}
+                  <a
+                    href="https://policies.google.com/terms"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-tw-muted-light/60"
+                  >
+                    Terms of Service
+                  </a>{" "}
+                  apply.
                 </p>
               </form>
             </>
