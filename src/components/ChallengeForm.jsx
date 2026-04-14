@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import ReactGA from "react-ga4";
 
 function validateEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -72,6 +73,14 @@ export default function ChallengeForm() {
       const result = await res.json();
 
       if (result.status === "success") {
+        ReactGA.event({
+          category: "Form",
+          action: "Challenge Form Submitted",
+        });
+        // Meta Pixel (IMPORTANT)
+        if (window.fbq) {
+          window.fbq("track", "Lead");
+        }
         setSubmitted(true);
       } else {
         setSubmitError(
