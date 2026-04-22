@@ -45,8 +45,7 @@ function StartTheChallengePage() {
       <Deliverables />
       <Testimonials />
       <FAQ />
-      <ChallengeForm />
-      <Footer />
+      <Footer privacyPath="/start-the-challenge/privacy-policy" />
     </>
   );
 }
@@ -62,8 +61,7 @@ function BuildWithAIPage() {
       <Deliverables />
       <Testimonials />
       <FAQ />
-      <ChallengeForm />
-      <Footer />
+      <Footer privacyPath="/build-with-ai/privacy-policy" />
     </>
   );
 }
@@ -77,6 +75,14 @@ export default function App() {
         <Route path="/start-the-challenge" element={<StartTheChallengePage />} />
         <Route path="/build-with-ai" element={<BuildWithAIPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route
+          path="/start-the-challenge/privacy-policy"
+          element={<PrivacyPolicy homePath="/start-the-challenge" />}
+        />
+        <Route
+          path="/build-with-ai/privacy-policy"
+          element={<PrivacyPolicy homePath="/build-with-ai" />}
+        />
       </Routes>
     </BrowserRouter>
   );
