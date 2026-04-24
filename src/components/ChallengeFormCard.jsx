@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import ReactGA from "react-ga4";
 
 function validateEmail(email) {
@@ -7,10 +7,28 @@ function validateEmail(email) {
 
 function validatePhone(phone) {
   if (!phone) return false;
-  return /^[+]?[\d\s()-]{7,20}$/.test(phone);
+  return /^\d{10}$/.test(phone);
+}
+
+function captureLandingPage() {
+  if (typeof window === "undefined") return;
+  if (!sessionStorage.getItem("tw_landing_page")) {
+    sessionStorage.setItem("tw_landing_page", window.location.pathname);
+  }
+}
+
+function readAttribution() {
+  return {
+    landingPage:
+      sessionStorage.getItem("tw_landing_page") || window.location.pathname,
+  };
 }
 
 export default function ChallengeFormCard({ compact = false }) {
+  useEffect(() => {
+    captureLandingPage();
+  }, []);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -34,7 +52,7 @@ export default function ChallengeFormCard({ compact = false }) {
     if (!formData.company.trim())
       errs.company = "Company / Project name is required";
     if (!validatePhone(formData.phone))
-      errs.phone = "Enter a valid phone number";
+      errs.phone = "Enter a valid 10-digit phone number";
     if (!formData.idea.trim()) errs.idea = "Tell us about your idea";
     return errs;
   }, [formData]);
@@ -60,7 +78,11 @@ export default function ChallengeFormCard({ compact = false }) {
       });
 
       const scriptUrl = import.meta.env.VITE_APPS_SCRIPT_URL;
-      const payload = new URLSearchParams({ ...formData, recaptchaToken });
+      const payload = new URLSearchParams({
+        ...formData,
+        ...readAttribution(),
+        recaptchaToken,
+      });
 
       const res = await fetch(scriptUrl, {
         method: "POST",
@@ -99,7 +121,11 @@ export default function ChallengeFormCard({ compact = false }) {
   };
 
   const updateField = (field) => (e) => {
-    setFormData((prev) => ({ ...prev, [field]: e.target.value }));
+    let value = e.target.value;
+    if (field === "phone") {
+      value = value.replace(/\D/g, "").slice(0, 10);
+    }
+    setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
 
@@ -119,10 +145,10 @@ export default function ChallengeFormCard({ compact = false }) {
             You're in. We'll be in touch within 1 working day.
           </div>
           <p className="text-[0.95rem] text-tw-muted-light leading-[1.7]">
-            Thanks {formData.firstName}! Your challenge slot is being
-            confirmed. Keep an eye on{" "}
-            <strong className="text-tw-text-inv">{formData.email}</strong> —
-            our product team will reach out with your kick-off call link.
+            Thanks {formData.firstName}! Your challenge slot is being confirmed.
+            Keep an eye on{" "}
+            <strong className="text-tw-text-inv">{formData.email}</strong> — our
+            product team will reach out with your kick-off call link.
           </p>
         </div>
       ) : (
@@ -247,8 +273,11 @@ export default function ChallengeFormCard({ compact = false }) {
                   id="phone"
                   required
                   type="tel"
+                  inputMode="numeric"
+                  maxLength={10}
+                  pattern="\d{10}"
                   className={inputClass}
-                  placeholder="+91 98765 43210"
+                  placeholder="9876543210"
                   value={formData.phone}
                   onChange={updateField("phone")}
                   aria-invalid={!!errors.phone}
@@ -278,9 +307,7 @@ export default function ChallengeFormCard({ compact = false }) {
                 value={formData.company}
                 onChange={updateField("company")}
                 aria-invalid={!!errors.company}
-                aria-describedby={
-                  errors.company ? "err-company" : undefined
-                }
+                aria-describedby={errors.company ? "err-company" : undefined}
               />
               {errors.company && (
                 <span
@@ -365,13 +392,12 @@ export default function ChallengeFormCard({ compact = false }) {
             >
               {submitting ? (
                 <>
-                  <div className="spinner" aria-hidden="true" /> Reserving
-                  your slot...
+                  <div className="spinner" aria-hidden="true" /> Reserving your
+                  slot...
                 </>
               ) : (
                 <>
-                  Start My 24-Hour Challenge{" "}
-                  <span aria-hidden="true">→</span>
+                  Start My 24-Hour Challenge <span aria-hidden="true">→</span>
                 </>
               )}
             </button>
